@@ -33,14 +33,10 @@ public class Pacman {
      * @param fila0 utilizado para definir las celdas ocupadas por esta Figura en la primera fila
      * @param fila1 utilizado para definir las celdas ocupadas por esta Figura en la segunda  fila
      * @param fila2 utilizado para definir las celdas ocupadas por esta Figura en la tercera  fila
-     * @param fila3 utilizado para definir las celdas ocupadas por esta Figura en la cuarta fila
      */
-    public Pacman(int fila0,int fila1,int fila2,int fila3) {
+    public Pacman(int fila0) {
         elements = new Vector<Elemento>();
         addElements(0,fila0);
-        addElements(1,fila1);
-        addElements(2,fila2);
-        addElements(3,fila3);
     }
     
     /**
@@ -50,14 +46,10 @@ public class Pacman {
     public static Pacman nuevaFigura(){
         Pacman fig=null;
        
-            fig = new Pacman(
-                    0x0000,
-                    0x0FF0,
-                    0x0FF0,
-                    0x0000);
+            fig = new Pacman(0xF);
         
-        fig.xorigen=3;
-        fig.yorigen=3;
+        fig.xorigen=14;
+        fig.yorigen=17;
         
         return fig;
     }
@@ -68,10 +60,7 @@ public class Pacman {
      * @param valor entero usado como máscara hexadecimal para indicar las casillas ocupadas en la fila (ver el constructor)
      */
     private void addElements(int fila, int valor){
-        if((valor & 0xF000)>0) elements.addElement(new Elemento(fila,0));
-        if((valor & 0x0F00)>0) elements.addElement(new Elemento(fila,1));
-        if((valor & 0x00F0)>0) elements.addElement(new Elemento(fila,2));
-        if((valor & 0x000F)>0) elements.addElement(new Elemento(fila,3));
+        if((valor & 0xF)>0) elements.addElement(new Elemento(fila,0));
     }
     
     /**

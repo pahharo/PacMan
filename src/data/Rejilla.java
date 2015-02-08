@@ -8,7 +8,11 @@ package data;
 public class Rejilla{
     public static final int VACIA        = 0;
     public static final int BLOQUE       = 1;
-    public static final int PACMAN        = 2;
+    public static final int PACMAN       = 2;
+    public static final int Pg           = 3; // Punto grande
+    public static final int Pc           = 4;  // Punto pequeño
+    public int puntos = 0;
+    
     
     private int anchura;
     private int altura;
@@ -71,21 +75,46 @@ public class Rejilla{
     public void initRejilla(){
         int i,j;
         
-        int scenario[][]=  {{1,1,1,1,1,1,1,1,1,1,1,1},
-                            {1,1,1,0,0,0,0,0,0,0,0,0},
-                            {1,1,1,0,0,0,0,0,0,0,0,0},
-                            {1,1,1,0,0,0,0,0,0,0,0,0},
-                            {1,1,1,0,0,0,0,0,0,0,0,0},
-                            {1,1,1,0,0,0,0,0,0,0,0,0},
-                            {1,1,1,0,0,0,0,0,0,0,0,0},
-                            {1,1,1,0,0,0,0,0,0,0,0,0},
-                            {1,1,1,0,0,0,0,0,0,0,0,0},
-                            {1,1,1,0,0,0,0,0,0,0,0,0},
-                            {1,1,1,0,0,0,0,0,0,0,0,0},
-                            {1,1,1,0,0,0,0,0,0,0,0,0},};
-        celdas=scenario;
-    }
-    
+        int scenario[][]=  {{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+                            {1,4,4,4,4,4,4,4,4,4,4,4,4,1,1,4,4,4,4,4,4,4,4,4,4,4,4,1},
+                            {1,4,1,1,1,1,4,1,1,1,1,1,4,1,1,4,1,1,1,1,1,4,1,1,1,1,4,1},
+                            {1,3,1,1,1,1,4,1,1,1,1,1,4,1,1,4,1,1,1,1,1,4,1,1,1,1,3,1},
+                            {1,4,1,1,1,1,4,1,1,1,1,1,4,1,1,4,1,1,1,1,1,4,1,1,1,1,4,1},
+                            {1,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,1},
+                            {1,4,1,1,1,1,4,1,1,4,1,1,1,1,1,1,1,1,4,1,1,4,1,1,1,1,4,1},
+                            {1,4,1,1,1,1,4,1,1,4,1,1,1,1,1,1,1,1,4,1,1,4,1,1,1,1,4,1},
+                            {1,4,4,4,4,4,4,1,1,4,4,4,4,1,1,4,4,4,4,1,1,4,4,4,4,4,4,1},
+                            {1,1,1,1,1,1,4,1,1,1,1,1,0,1,1,0,1,1,1,1,1,4,1,1,1,1,1,1},
+                            {1,0,0,0,0,1,4,1,1,1,1,1,0,1,1,0,1,1,1,1,1,4,1,0,0,0,0,1},
+                            {1,0,0,0,0,1,4,1,1,0,0,0,0,0,0,0,0,0,0,1,1,4,1,0,0,0,0,1},
+                            {1,0,0,0,0,1,4,1,1,0,1,1,0,0,0,0,1,1,0,1,1,4,1,0,0,0,0,1},
+                            {1,1,1,1,1,1,4,1,1,0,1,0,0,0,0,0,0,1,0,1,1,4,1,1,1,1,1,1},
+                            {1,0,0,0,0,0,4,0,0,0,1,0,0,0,0,0,0,1,0,0,0,4,0,0,0,0,0,1},
+                            {1,1,1,1,1,1,4,1,1,0,1,0,0,0,0,0,0,1,0,1,1,4,1,1,1,1,1,1},
+                            {1,0,0,0,0,1,4,1,1,0,1,1,1,1,1,1,1,1,0,1,1,4,1,0,0,0,0,1},
+                            {1,0,0,0,0,1,4,1,1,0,0,0,0,0,0,0,0,0,0,1,1,4,1,0,0,0,0,1},
+                            {1,0,0,0,0,1,4,1,1,0,1,1,1,1,1,1,1,1,0,1,1,4,1,0,0,0,0,1},
+                            {1,1,1,1,1,1,4,1,1,0,1,1,1,1,1,1,1,1,0,1,1,4,1,1,1,1,1,1},
+                            {1,4,4,4,4,4,4,4,4,4,4,4,4,1,1,4,4,4,4,4,4,4,4,4,4,4,4,1},
+                            {1,4,1,1,1,1,4,1,1,1,1,1,4,1,1,4,1,1,1,1,1,4,1,1,1,1,4,1},
+                            {1,4,1,1,1,1,4,1,1,1,1,1,4,1,1,4,1,1,1,1,1,4,1,1,1,1,4,1},
+                            {1,3,4,4,1,1,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,1,1,4,4,3,1},
+                            {1,1,1,4,1,1,4,1,1,4,1,1,1,1,1,1,1,1,4,1,1,4,1,1,4,1,1,1},
+                            {1,1,1,4,1,1,4,1,1,4,1,1,1,1,1,1,1,1,4,1,1,4,1,1,4,1,1,1},
+                            {1,4,4,4,4,4,4,1,1,4,4,4,4,1,1,4,4,4,4,1,1,4,4,4,4,4,4,1},
+                            {1,4,1,1,1,1,1,1,1,1,1,1,4,1,1,4,1,1,1,1,1,1,1,1,1,1,4,1},
+                            {1,4,1,1,1,1,1,1,1,1,1,1,4,1,1,4,1,1,1,1,1,1,1,1,1,1,4,1},
+                            {1,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,1},
+                            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},};
+        // Hacemos la traspuesta de la matriz para que se vea el escenario tal y como lo vemos aquí
+        for(i = 0; i < scenario.length; i++){
+            for (j = 0; j < scenario[0].length; j++){
+                celdas[j][i] = scenario[i][j];
+            }
+        }
+        //celdas=scenario;
+    } 
+   
     /**
      * Pone las celdas de la figura como ocupadas en la rejilla en las posiciones correspondientes
      * @param fig La Figura que queremos copiar en la rejilla
@@ -118,29 +147,29 @@ public class Rejilla{
             elemento=fig.getElementAt(i);
             if(direccion==Pacman.ABAJO){
                 if(celdas[elemento.getColumna()+fig.getXOrigen()]
-                        [elemento.getFila()+fig.getYOrigen()+1]!=VACIA){
+                        [elemento.getFila()+fig.getYOrigen()+1]==BLOQUE){
                     return true;
                 }
             } 
             else if(direccion==Pacman.IZQUIERDA){
                 if(celdas[elemento.getColumna()+fig.getXOrigen()-1]
-                        [elemento.getFila()+fig.getYOrigen()]!=VACIA){
+                        [elemento.getFila()+fig.getYOrigen()]==BLOQUE){
                     return true;
                 }
             }
             else if(direccion==Pacman.DERECHA){
                 if(celdas[elemento.getColumna()+fig.getXOrigen()+1]
-                        [elemento.getFila()+fig.getYOrigen()]!=VACIA){
+                        [elemento.getFila()+fig.getYOrigen()]==BLOQUE){
                     return true;
                 }
             }
             else if(direccion==Pacman.ARRIBA){
                 if(celdas[elemento.getColumna()+fig.getXOrigen()]
-                        [elemento.getFila()+fig.getYOrigen()-1]!=VACIA){
+                        [elemento.getFila()+fig.getYOrigen()-1]==BLOQUE){
                     return true;
                 }
             }
-        }       
+        }
         return false;
     }
     
@@ -218,6 +247,10 @@ public class Rejilla{
     }
     
     /**
+     * Elimina los puntos comidos de las casillas
+     */
+    
+    /**
      * Elimina las flas llenas en esta Rejilla, desplazando hacia abajo las filas que haya encima
      */
     void eliminarFilasLlenas(){
@@ -254,6 +287,65 @@ public class Rejilla{
         for(int i=0;i<anchura;i++){
             celdas[i][fdestino]=celdas[i][forigen];
         }
+    }
+    
+    /**
+     * Indica si al mover la figura una celda según la direccion indicada, se chocará con
+     * alguna otra pieza ya colocada, o con los bordes de la rejilla
+     * @param fig la Figura que queremos comprobar si se chocará
+     * @param direccion de movimiento (Figura.ABAJO,Figura.DERECHA o FIGURA.IZQUIERDA)
+     * @return true si se choca, false en caso contrario
+     */
+    public void cocoZampado(Pacman fig, int direccion){
+        Elemento elemento;
+        for(int i=0;i<fig.getNElements();i++){
+            elemento=fig.getElementAt(i);
+            if(direccion==Pacman.ABAJO){
+                if(celdas[elemento.getColumna()+fig.getXOrigen()]
+                        [elemento.getFila()+fig.getYOrigen()+1]==Pg | 
+                        celdas[elemento.getColumna()+fig.getXOrigen()]
+                        [elemento.getFila()+fig.getYOrigen()+1]==Pc){
+                    puntos++;
+                    System.out.println("puntitos "+puntos);
+                    celdas[elemento.getColumna()+fig.getXOrigen()]
+                        [elemento.getFila()+fig.getYOrigen()+1]=VACIA;
+                }
+            } 
+            else if(direccion==Pacman.IZQUIERDA){
+                if(celdas[elemento.getColumna()+fig.getXOrigen()-1]
+                        [elemento.getFila()+fig.getYOrigen()]==Pg | 
+                        celdas[elemento.getColumna()+fig.getXOrigen()-1]
+                        [elemento.getFila()+fig.getYOrigen()]==Pc){
+                    celdas[elemento.getColumna()+fig.getXOrigen()-1]
+                        [elemento.getFila()+fig.getYOrigen()]=VACIA;
+                    puntos++;
+                }
+            }
+            else if(direccion==Pacman.DERECHA){
+                if(celdas[elemento.getColumna()+fig.getXOrigen()+1]
+                        [elemento.getFila()+fig.getYOrigen()]==Pg | 
+                        celdas[elemento.getColumna()+fig.getXOrigen()+1]
+                        [elemento.getFila()+fig.getYOrigen()]==Pc){
+                    celdas[elemento.getColumna()+fig.getXOrigen()+1]
+                        [elemento.getFila()+fig.getYOrigen()]=VACIA;
+                    puntos++;
+                }
+            }
+            else if(direccion==Pacman.ARRIBA){
+                if(celdas[elemento.getColumna()+fig.getXOrigen()]
+                        [elemento.getFila()+fig.getYOrigen()-1]==Pg | 
+                        celdas[elemento.getColumna()+fig.getXOrigen()]
+                        [elemento.getFila()+fig.getYOrigen()-1]==Pc){
+                    celdas[elemento.getColumna()+fig.getXOrigen()]
+                        [elemento.getFila()+fig.getYOrigen()-1]=VACIA;
+                    puntos++;
+                }
+            }
+        }
+    }
+    
+    public int getPuntuacion(){
+        return puntos;
     }
 }
 

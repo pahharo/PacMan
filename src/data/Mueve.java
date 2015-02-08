@@ -3,6 +3,9 @@ import javax.swing.JPanel;
 import guipacman.PacmanFrame;
 import data.*;
 import guipacman.RejillaPanel;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Esta clase implementa una hebra que hace que se mueva continuamente hacia abajo la Figura actual.
@@ -47,6 +50,8 @@ public class Mueve implements Runnable{
                     }
                 }
                 Thread.sleep(delay);
+                frame.setRecord(frame.getRejilla().getPuntuacion());
+                frame.setPuntuacion();
                 int lastmove=frame.getMove(); // último movimiento
                 //Dependiendo de hacia donde se mueva comprobamos si se choca y sino movemos
                 if(lastmove==0){
@@ -54,24 +59,28 @@ public class Mueve implements Runnable{
                 }
                 else if(lastmove==2){
                     if(!frame.getRejilla().seChoca(frame.getFigura(),Pacman.ABAJO)){
+                        frame.getRejilla().cocoZampado(frame.getFigura(), Pacman.ABAJO);
                         frame.getFigura().mueve(Pacman.ABAJO);
                         if(frame.getPanel()!=null)
                             frame.getPanel().repaint();
                     } 
                 } else if(lastmove==4){
                     if(!frame.getRejilla().seChoca(frame.getFigura(),Pacman.IZQUIERDA)){
+                        frame.getRejilla().cocoZampado(frame.getFigura(), Pacman.IZQUIERDA);
                         frame.getFigura().mueve(Pacman.IZQUIERDA);
                         if(frame.getPanel()!=null)
                             frame.getPanel().repaint();
                     } 
                 } else if(lastmove==6){
                     if(!frame.getRejilla().seChoca(frame.getFigura(),Pacman.DERECHA)){
+                        frame.getRejilla().cocoZampado(frame.getFigura(), Pacman.DERECHA);
                         frame.getFigura().mueve(Pacman.DERECHA);
                         if(frame.getPanel()!=null)
                             frame.getPanel().repaint();
                     } 
                 } else if(lastmove==8){
                     if(!frame.getRejilla().seChoca(frame.getFigura(),Pacman.ARRIBA)){
+                        frame.getRejilla().cocoZampado(frame.getFigura(), Pacman.ARRIBA);
                         frame.getFigura().mueve(Pacman.ARRIBA);
                         if(frame.getPanel()!=null)
                             frame.getPanel().repaint();
@@ -91,6 +100,8 @@ public class Mueve implements Runnable{
             }// end while(continuar)
         } catch(InterruptedException e){
             System.out.println("Hilo MueveSerpiente interrumpido");
+        } catch (IOException ex) {
+            Logger.getLogger(Mueve.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
